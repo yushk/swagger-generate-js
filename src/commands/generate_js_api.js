@@ -1,5 +1,6 @@
 const vscode = require('vscode');
 const fs = require('fs')
+const path = require("path");
 const utils = require('../utils/common')
 var bulder = require('../lib/swagger-builder.js')
 
@@ -32,18 +33,24 @@ async function generateJsApi(fileUri) {
         }
     }
     console.log('tmpdir:',tmpdir)
-    let output = utils.getProjectRoot()+'/src/api/swagger_api.js'
+    let projectRoot = utils.getProjectRoot()
+    let output = path.join(projectRoot,'/src/api/')
     console.log('output:',output)
+    if(!fs.existsSync(output)){
+        console.log('not exists')
+        fs.mkdirSync(output,{ recursive: true } )
+        vscode.window.showInformationMessage('create ',utils.getProjectRoot()+'/src/api', 'success');
+    }
 
     readFile(tmpdir, (template) => {
         console.log('readFile')
-        fs.writeFile(output, template, (error) => {
+        fs.writeFile(path.join(output,'swagger_api.js'), template, (error) => {
         console.log('writeFile')
         if (error) {
             console.error(error)
                 throw error
             }
-            console.log('build ' + tmpdir + ' to ' + output + ' success')
+            vscode.window.showInformationMessage('build ' + tmpdir + ' to ' + path.join(output,'swagger_api.js') + ' success')
         })
     })
 
