@@ -1,0 +1,52 @@
+{{#with info}}
+/**
+ * @summary {{ title }}
+{{ wrap-helper description }}
+ * @version {{ version }}
+{{#if termsOfService}}
+ * @copyright {{ termsOfService }}
+{{/if}}
+{{#if contact.email}}
+ * @author <{{ contact.email }}>
+{{/if}}
+{{#if license}}
+ * @license {{ license.name }}
+{{/if}}
+ */
+{{/with}}
+
+import axios from 'axios'
+{{#each schemes}}
+{{#if @first}}
+let domain = '{{this}}://{{@root.host}}{{@root.basePath}}'
+{{/if}}
+{{/each}}
+let axiosInstance = axios.create()
+export const getDomain = () => {
+  return domain
+}
+export const setDomain = ($domain) => {
+  domain = $domain
+}
+export const getAxiosInstance = () => {
+  return axiosInstance
+}
+export const setAxiosInstance = ($axiosInstance) => {
+  axiosInstance = $axiosInstance
+}
+
+export const request = (method, url, params, config = {}) => {
+  method = method.toLowerCase()
+  let configs = {
+    baseURL: domain,
+    method: method,
+    url: url,
+    params: params.querys,
+    headers: params.headers,
+    data: params.body
+  }
+  configs = Object.assign(configs, config)
+  return axiosInstance(configs)
+}
+
+{{> methods }}

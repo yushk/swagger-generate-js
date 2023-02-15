@@ -1,0 +1,56 @@
+/**
+ * @name {{operationId}}
+{{#if deprecated}}
+ * @deprecated
+{{/if}}
+ * @method {{method}}
+ * @summary {{ summary }}
+{{ wrap-helper description }}
+{{#parameters}}
+ * @param { {{type}} } [{{in}}] {{name}} -{{ safestring-helper description }}
+{{/parameters}}
+ */
+export const {{operationId}} = (parameters = {}) => {
+  const config = parameters.$config ? parameters.$config : {}
+  let url = ''
+  const params = { querys: {}, headers: {}, body: {}}
+  if (config.headers === undefined) {
+    config.headers = {}
+  }
+{{#if consumes}}
+  config.headers['Content-Type'] = '{{consumes}}'
+{{/if}}
+{{#if produces}}
+  config.headers['Accept'] = '{{produces}}'
+{{/if}}
+  url = '{{path}}'
+{{form-data-helper consumes}}
+{{#parameters}}
+  if (parameters['{{name}}'] !== undefined) {
+{{compare-helper this}}
+  }
+{{#required}}
+  if (parameters['{{name}}'] === undefined) {
+    return Promise.reject(new Error('Missing required {{type}} parameter: {{name}}'))
+  }
+{{/required}}
+{{/parameters}}
+  return request('{{method}}', url, params, config)
+}
+/**
+ * @name {{operationId}}URL
+{{#if deprecated}}
+ * @deprecated
+{{/if}}
+ */
+export const {{operationId}}URL = (parameters = {}) => {
+  let url = ''
+  const querys = {}
+  url = '{{path}}'
+{{#parameters}}
+{{url-compare-helper this}}
+{{/parameters}}
+  const keys = Object.keys(querys)
+  return domain + url + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(querys[key])).join('&')) : '')
+}
+

@@ -1,7 +1,7 @@
 {
-  "name": "swagger-generate-ts",
-  "displayName": "swagger-generate-ts",
-  "description": "swagger file generae to typescript api",
+  "name": "swagger-to-js",
+  "displayName": "swagger-to-js",
+  "description": "swagger file generae to javascript api",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.75.0"
@@ -14,10 +14,29 @@
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "swagger-generate-ts.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+      {
+        "command": "swagger-generate-ts.helloWorld",
+        "title": "Generate Api"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceFilename =~ /.yaml|.json/",
+          "command": "swagger-generate-ts.helloWorld",
+          "group": "group1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "swagger-generate-ts.helloWorld",
+        "key": "ctrl+f12",
+        "mac": "cmd+f12",
+        "when": "editorTextFocus"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
@@ -25,14 +44,18 @@
     "test": "node ./test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.75.0",
     "@types/glob": "^8.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.75.0",
+    "@vscode/test-electron": "^2.2.2",
     "eslint": "^8.33.0",
     "glob": "^8.1.0",
     "mocha": "^10.1.0",
-    "typescript": "^4.9.4",
-    "@vscode/test-electron": "^2.2.2"
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7",
+    "swagger-parser": "^10.0.3"
   }
 }
