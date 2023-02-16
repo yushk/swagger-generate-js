@@ -20,7 +20,7 @@ async function generateJsApi(fileUri) {
     let execPath = "";
     console.log("fileUri:",fileUri)
     //获取文本编辑器中打开的文件
-    let tmpdir = vscode.window.activeTextEditor?.document.fileName;
+    let tmpdir = vscode.window.activeTextEditor.document.fileName;
     const fstat = fs.lstatSync(fileUri.path);
     if(fstat.isFile()){	
         tmpdir = fileUri.path;

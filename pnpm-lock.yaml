@@ -6,7 +6,7 @@ specifiers:
   '@types/node': 16.x
   '@types/vscode': ^1.75.0
   '@vscode/test-electron': ^2.2.2
-  eslint: ^8.33.0
+  eslint: ^8.34.0
   glob: ^8.1.0
   handlebars: ^4.7.7
   mocha: ^10.1.0
