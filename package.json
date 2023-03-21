@@ -2,7 +2,9 @@
   "name": "swagger-to-js",
   "displayName": "swagger-to-js",
   "description": "swagger file generae to javascript api",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "publisher":"yushk",
+  "icon":"src/img/icon.png",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -13,6 +15,9 @@
     "onCommand:swagger-generate-ts.helloWorld"
   ],
   "main": "./extension.js",
+  "repository": {
+    "url": "https://github.com/yushk/swagger-generate-ts"
+  },
   "contributes": {
     "commands": [
       {
